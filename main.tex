@@ -1,0 +1,96 @@
+% main.tex
+\documentclass[a4paper,9pt,twocolumn]{article}
+\usepackage{amsmath,amssymb,amsthm,amsbsy,amsfonts}
+\usepackage{physics}
+\usepackage{cleveref}
+\newcommand{\correspondsto}{\;\widehat{=}\;}
+\usepackage{bm}
+\usepackage{enumitem} % label enumerate
+\newtheorem{theorem}{Theorem}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+% change Q.D.E symbol
+\renewcommand\qedsymbol{$\hfill \mbox{\raggedright \rule{0.1in}{0.2in}}$}
+
+\begin{document}
+
+\author{Yingbo Ma\\
+        \tt{mayingbo5@gmail.com}}
+\title{Adjoint of differential-algebraic equations}
+\date{January 23, 2020}
+
+\maketitle
+
+\section{Notation}
+$M$ denotes a mass matrix. $u$ denotes states. $p$ denotes parameters. $s$
+denotes $\pdv{u}{p}$ (sensitivity). $J$ denotes $\pdv{f}{u}$ (Jacobian of the
+differential equation with respect to the states).
+
+\section{Adjoint derivation}
+Given a function $u$ that satisfies the differential-algebraic equation
+\begin{equation} \label{eq:de}
+  M\dot{u} = f(u(t), p, t),
+\end{equation}
+and a cost function (functional)
+\begin{equation}
+  G[u] = \int_{t_0}^{t_1} g(u(p, t), p) \dd{t}
+\end{equation}
+in many applications, we may wish to compute the gradient of the cost function
+with respect to the parameters $\dv{G}{p}$ to perform optimizations. Na\"ively,
+we could apply Leibniz rule for integration an obtain:
+\begin{align}
+  \dv{G}{p} &= \dv{p} \int_{t_0}^{t_1} g(u(p, t), p) \dd{t} \\
+            &= \int_{t_0}^{t_1} \dv{p} g(u(p, t), p) \dd{t} \\
+            &= \int_{t_0}^{t_1} \pdv{g}{u}\pdv{u}{p} + \pdv{g}{p} \dd{t} \\
+            &= \int_{t_0}^{t_1} \pdv{g}{u}s + \pdv{g}{p} \dd{t}
+            \label{eq:dgdp}
+\end{align}
+
+It could be very computationally intensive to get the $\dv{u}{p}$ term, because
+we would have to solve another differential equation:
+\begin{equation} \label{eq:forward_sens}
+  M\dot{s} = Js + \pdv{f}{p}.
+\end{equation}
+
+To alleviate the computational cost, we could add a ``$0$'' to $\dv{G}{p}$, and
+get:
+\begin{align}
+  \dv{G}{p} = &\dv{I}{p} \\
+  = &\int_{t_0}^{t_1} \pdv{g}{u}s + \pdv{g}{p} \dd{t} \\
+  &-\int_{t_0}^{t_1} \lambda^*\qty(\underbrace{M\dot{s} -
+  Js - \pdv{f}{p}}_{0 \quad\cref{eq:forward_sens}}) \dd{t}
+\end{align}
+Now, we have introduced the $\dot{s}$ term to the gradient expression, we can
+use the classic technique of integration by parts to simplify the expression
+further. The $\lambda^* M\dot{s}$ term can be written as:
+\begin{align}
+  M\int_{t_0}^{t_1} \lambda^* \dot{s} \dd{t} = M\eval{\lambda^* s}_{t_0}^{t_1} -
+  M\int_{t_0}^{t_1} \dot{\lambda}^* s \dd{t}.
+\end{align}
+The gradient expression after grouping is then:
+\begin{align} \label{eq:simplified_sens}
+  \dv{G}{p} &= \int_{t_0}^{t_1} \pdv{g}{u}s + \pdv{g}{p}
+  + \dot{\lambda}^* Ms + \lambda^* Js+ \lambda^* \pdv{f}{p} \dd{t}
+              - \eval{\lambda^* s}_{t_0}^{t_1} \nonumber \\
+            &= \int_{t_0}^{t_1} \qty(\pdv{g}{u} + \dot{\lambda}^*M  + \lambda^* J)s
+              +\lambda^* \pdv{f}{p}  + \pdv{g}{p} \dd{t}
+              - \eval{\lambda^* s}_{t_0}^{t_1}
+\end{align}
+It becomes obvious that we can impose the condition
+\begin{equation} \label{eq:cond}
+  \pdv{g}{u} + \dot{\lambda}^*M + \lambda^* J = \bm{0} \qq{and}
+  \lambda(t_1) = \bm{0},
+\end{equation}
+to make \cref{eq:simplified_sens} independent of $s$.
+
+After rearranging \cref{eq:simplified_sens} and \cref{eq:cond}, we have
+\begin{align}
+  M^*\dot{\lambda} &= -J^* \lambda - \qty(\pdv{g}{u})^*, \quad \lambda(t_1) = \bm{0} \\
+  \dv{G}{p} &= \int_{t_0}^{t_1} \lambda^* \pdv{f}{p}  + \pdv{g}{p} \dd{t}
+              - \eval{\lambda^* s}_{t_0}
+\end{align}
+
+
+\end{document}
