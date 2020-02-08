@@ -65,8 +65,8 @@ Now, we have introduced the $\dot{s}$ term to the gradient expression, we can
 use the classic technique of integration by parts to simplify the expression
 further. The $\lambda^* M\dot{s}$ term can be written as:
 \begin{align}
-  M\int_{t_0}^{t_1} \lambda^* \dot{s} \dd{t} = M\eval{\lambda^* s}_{t_0}^{t_1} -
-  M\int_{t_0}^{t_1} \dot{\lambda}^* s \dd{t}.
+  \int_{t_0}^{t_1} \lambda^* M\dot{s} \dd{t} = \eval{\lambda^* Ms}_{t_0}^{t_1} -
+  \int_{t_0}^{t_1} \dot{\lambda}^* Ms \dd{t}.
 \end{align}
 The gradient expression after grouping is then:
 \begin{align} \label{eq:simplified_sens}
@@ -88,7 +88,6 @@ After rearranging \cref{eq:simplified_sens} and \cref{eq:cond}, we have
 \begin{align}
   M^*\dot{\lambda} &= -J^* \lambda - \qty(\pdv{g}{u})^*, \quad \lambda(t_1) = \bm{0} \\
   \dv{G}{p} &= \int_{t_0}^{t_1} \lambda^* \pdv{f}{p}  + \pdv{g}{p} \dd{t}
-              - \eval{\lambda^* s}_{t_0}
 \end{align}
 
 
