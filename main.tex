@@ -55,7 +55,7 @@
     \times \mathbb{C}\times \mathbb{C}\times \mathbb{C} \mapsto \mathbb{C}^n$
     denotes Lagrange multiplier.
 
-  \item $\lambda_\tau$ denotes $\lambda_\tau$.
+  \item $\lambda_\tau$ denotes $\pdv{\lambda}{\tau}$.
 \end{itemize}
 
 \section{Introduction and Forward Sensitivity Analysis}
@@ -140,7 +140,7 @@ In many cases, we only want to compute sensitivity at specific a time point
 $\tau$, i.e. $\eval{\pdv{g(u(p, t), p, t)}{p}}_{t=\tau}$. In these cases, we
 call the cost function discrete.
 
-To reuse our previous result, we need to find a way to relate $\dv{g}{p}$ with
+To reuse our previous result, we need to find a way to relate $\dv{g}{p}$ to
 $\dv{G}{p}$. There are two options, using Dirac delta distribution or using
 Leibniz integration rule. We pick the latter because it is more straight
 forward.
@@ -239,11 +239,12 @@ Expanding the equation we have
   \bm{0} &= \pdv{f}{u^a}^* \lambda^a + \pdv{g^a}{u}^* \implies
   \lambda^a = -\qty(\pdv{f}{u^a}^*)^{-1}\pdv{g^a}{u}^* \label{eq:ex1_sys2}
 \end{align}
-Plugging \cref{eq:ex1_sys2} into \cref{eq:ex1_sys1}, we obtain
+Plugging \cref{eq:ex1_sys2} into \cref{eq:ex1_sys1}, we obtain the
+initialization of $\lambda_\tau$
 \begin{equation}
   \widetilde{M}^* \lambda_\tau^d(\tau) = \eval{\qty(-\pdv{h}{u^d}^*
     \qty(\pdv{f}{u^a}^*)^{-1}\pdv{g^a}{u}^* +
-  \pdv{g^d}{u}^*)}_{t=\tau}
+  \pdv{g^d}{u}^*)}_{t=\tau}.
 \end{equation}
 
 \end{document}
