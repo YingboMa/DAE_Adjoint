@@ -94,7 +94,7 @@ To alleviate the computational cost of the forward sensitivity equation, we
 could add a ``$0$'' to $\dv{G}{p}$, and get:
 \begin{align}
   \dv{G}{p} = &\dv{I}{p} \\
-  = &\int_{t_0}^{t_1} \pdv{g}{u}s + \pdv{g}{p} -
+  = &\int_{t_0}^{t_1} \pdv{g}{u}S + \pdv{g}{p} -
   \lambda^*\qty(\underbrace{M\dot{S} -
   JS - \pdv{f}{p}}_{0 \quad\cref{eq:forward_sens}}) \dd{t}.
 \end{align}
@@ -111,7 +111,7 @@ After integration by parts, the $\lambda^* M\dot{S}$ term is
 \end{align}
 The gradient expression after grouping is then:
 \begin{align} \label{eq:simplified_sens}
-  \dv{G}{p} &= \int_{t_0}^{t_1} \pdv{g}{u}s + \pdv{g}{p}
+  \dv{G}{p} &= \int_{t_0}^{t_1} \pdv{g}{u}S + \pdv{g}{p}
   + \dot{\lambda}^* MS + \lambda^* JS+ \lambda^* \pdv{f}{p} \dd{t}
               - \eval{\lambda^* MS}_{t_0}^{t_1} \nonumber \\
             &= \int_{t_0}^{t_1} \qty(\pdv{g}{u} + \dot{\lambda}^*M  + \lambda^*
@@ -216,7 +216,8 @@ To handle singular mass matrix, we need to split the problem system into
 differential variables $\{\cdot\}^d$ and algebraic
 variables $\{\cdot\}^a$, so that $\widetilde{M}$ is fully ranked,
 \begin{align}
-  \mqty(\widetilde{M} & 0 \\ 0 & 0) \mqty(u^d\\ u^a) &= \mqty(f(u^d, u^a, p, t)
+  \mqty(\widetilde{M} & 0 \\ 0 & 0) \mqty(\dot{u}^d\\ \dot{u}^a) &= \mqty(f(u^d,
+  u^a, p, t)
   \\ h(u^d, u^a, p, t)) \\
   u^d(t_0) &= u_{d0}(p).
 \end{align}
