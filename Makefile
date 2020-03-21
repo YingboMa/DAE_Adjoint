@@ -4,6 +4,3 @@ MAIN=main
 
 main: ${DEP}
 	${LL} -f -pdf ${MAIN} -auxdir=output -outdir=output
-
-show:
-	zathura output/main.pdf
